@@ -13,9 +13,8 @@
 
 ## Features
 
-- **Data ingest**
-  - GitHub REST/GraphQL (PRs & builds) – 90-day look-back
-  - Jira Cloud incidents
+- GitHub REST/GraphQL (PRs & builds) – 90‑day look‑back
+- Jira Cloud incidents
 - **Lake & Modeling**
   - DuckDB single-file database (`data/observatory.duckdb`)
   - Polars/SQL models create KPI tables
@@ -38,25 +37,31 @@
 ```bash
 git clone https://github.com/MrSanjeeva/Engineering-KPIs-Pipeline.git
 cd Engineering-KPIs-Pipeline
-python -m venv .venv && source .venv/bin/activate
+python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 
-# 1. Set your PAT once per shell
-export GITHUB_PAT=xxxxxxxx
+# 1 · Auth tokens (set once per shell)
+export GH_PAT=xxxxxxxxxxxxxxxxxxxxxxxxxxxx          # GitHub Personal Access Token
+export JIRA_BASE=https://<your-site>.atlassian.net   # Jira cloud site
+export JIRA_EMAIL=you@example.com                   # Atlassian account email
+export JIRA_TOKEN=ATATyourToken12345                # Jira API token
 
-# 2. Ingest GitHub data (90 days)
+# 2 · Ingest data (90‑day look‑back)
 python ingest/github_pull.py
+python ingest/jira_pull.py          # optional—skips if creds not set
 
-# 3. Build DuckDB lake & KPIs  (Jira step auto-skips if file not present yet)
+# 3 · Build DuckDB lake & KPIs
 python models/build_kpis.py
 
-# 4. Explore
-duckdb data/observatory.duckdb  # run SQL
+# 4 · Explore
+duckdb data/observatory.duckdb      # open interactive SQL shell
 ```
 
 ## Live Demo
 
-Link to superset dashboard
+_Coming soon — Superset dashboard will be hosted at_
+
+`https://eng-kpis.onrender.com`
 
 ## Architecture
 
@@ -70,6 +75,15 @@ graph LR
     DUCK --> KPI[KPI tables]
     KPI --> BI[Superset Dashboard]
 ```
+
+## Roadmap
+
+- [x] GitHub ingest with unit test
+- [x] Jira ingest with unit test
+- [ ] KPI models in DuckDB (`kpi_daily`, `deploy_freq`, `flaky_index`)
+- [ ] Superset Docker compose & local dashboard
+- [ ] Render deploy + README badge
+- [ ] Automated daily data refresh
 
 ## License
 
