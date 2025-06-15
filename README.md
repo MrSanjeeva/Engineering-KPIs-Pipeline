@@ -23,9 +23,8 @@
   - Deployment frequency
   - Change-failure rate
   - Flaky-test index
-- **Dashboard (Superset)**
-  - MTTR trend, deploy-freq bar, flaky heatmap, team radar _(to be deployed)_
-  - Public URL on Render free tier
+  - Dashboard (Superset)
+  - MTTR trend, deploy‑freq bar, 30‑day flaky heatmap – exported as `dash/eng_kpis_dashboard_export.zip`
 - **CI / Data refresh**
   - GitHub Actions: unit tests on every push
   - Scheduled 06:05 UTC job regenerates data & KPIs
@@ -52,6 +51,9 @@ python ingest/jira_pull.py          # optional—skips if creds not set
 
 # 3 · Build DuckDB lake & KPIs
 python models/build_kpis.py
+
+# (optional) Import Superset dashboard after container is up
+# superset import-dashboards dash/eng_kpis_dashboard_export.zip
 
 # 4 · Explore
 duckdb data/observatory.duckdb      # open interactive SQL shell
@@ -80,8 +82,8 @@ graph LR
 
 - [x] GitHub ingest with unit test
 - [x] Jira ingest with unit test
-- [ ] KPI models in DuckDB (`kpi_daily`, `deploy_freq`, `flaky_index`)
-- [ ] Superset Docker compose & local dashboard
+- [x] KPI models in DuckDB (`kpi_daily`, `deploy_freq`, `flaky_index`)
+- [x] Superset Docker compose & local dashboard
 - [ ] Render deploy + README badge
 - [ ] Automated daily data refresh
 
