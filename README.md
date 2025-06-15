@@ -42,7 +42,7 @@ python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
 # 1. Set your PAT once per shell
-export GITHUB_PAT=ghp_xxxxxxxx
+export GITHUB_PAT=xxxxxxxx
 
 # 2. Ingest GitHub data (90 days)
 python ingest/github_pull.py

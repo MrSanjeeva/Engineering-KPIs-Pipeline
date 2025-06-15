@@ -12,3 +12,6 @@ jobs:
       - run: pytest -q
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
+          JIRA_BASE: ${{ secrets.JIRA_BASE }}
+          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
