@@ -10,3 +10,5 @@ jobs:
           python-version: "3.11"
       - run: pip install -r requirements.txt
       - run: pytest -q
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
