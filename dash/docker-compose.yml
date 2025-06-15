@@ -1,0 +1,21 @@
+services:
+  superset:
+    build: .
+    container_name: superset
+    platform: linux/arm64/v8 # Keep this if using Apple Silicon
+    restart: unless-stopped
+    ports:
+      - "8088:8088"
+    environment:
+      SUPERSET_SECRET_KEY: "eng-kpis-demo-key"
+      # auto-create admin user on first boot
+      ADMIN_USERNAME: "admin"
+      ADMIN_PASSWORD: "admin"
+      ADMIN_FIRST_NAME: "Admin"
+      ADMIN_LAST_NAME: "User"
+      ADMIN_EMAIL: "admin@superset.local"
+    volumes:
+      # DuckDB file mapped read-write
+      - ../data/observatory.duckdb:/app/observatory.duckdb
+      # Optional custom config
+      - ./superset_config.py:/app/pythonpath/superset_config.py

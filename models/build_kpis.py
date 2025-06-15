@@ -68,8 +68,16 @@ ORDER BY day;
 # ---------- 4. Flaky-test index (placeholder) ----------
 con.execute("""
 CREATE OR REPLACE TABLE flaky_index AS
-SELECT day, RANDOM()*5  AS flaky_idx
-FROM (SELECT DISTINCT day FROM kpi_daily)
+WITH calendar AS (
+    -- generate the last 30 calendar days up to today (inclusive)
+    SELECT (CURRENT_DATE - INTERVAL '1 day' * i) AS day
+    FROM range(30) AS t(i)
+)
+SELECT
+  day,
+  RANDOM() * 5.0 AS flaky_idx       -- 0 - 5 % simulated instability
+FROM calendar
+ORDER BY day;
 """)
 
 con.close()
