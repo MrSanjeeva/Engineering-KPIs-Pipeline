@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
 
+# Upgrade DB schema
+superset db upgrade
+
+# Create admin user
 superset fab create-admin \
   --username "${ADMIN_USERNAME:-admin}" \
   --firstname "${ADMIN_FIRSTNAME:-Admin}" \
@@ -8,5 +12,8 @@ superset fab create-admin \
   --email "${ADMIN_EMAIL:-admin@example.com}" \
   --password "${ADMIN_PASSWORD:-Sup3rSet!42}" || true
 
-# Run Superset
+# Initialize default roles, permissions, dashboards etc.
+superset init
+
+# Start the Superset server
 exec /usr/bin/run-server.sh
