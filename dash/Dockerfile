@@ -9,9 +9,9 @@ USER superset
 # finalize
 COPY data/observatory.duckdb /app/observatory.duckdb
 
-COPY dash/entrypoint.sh /entrypoint.sh
-
 COPY dash/superset_config.py /app/pythonpath/superset_config.py
-RUN chmod +x /entrypoint.sh
- 
+
+COPY dash/entrypoint.sh /entrypoint.sh
+RUN chmod +x dash/entrypoint.sh
+
 ENTRYPOINT ["/entrypoint.sh"]
