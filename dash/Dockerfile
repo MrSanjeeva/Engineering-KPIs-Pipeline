@@ -12,6 +12,5 @@ COPY data/observatory.duckdb /app/observatory.duckdb
 COPY dash/superset_config.py /app/pythonpath/superset_config.py
 
 COPY dash/entrypoint.sh /entrypoint.sh
-RUN chmod +x dash/entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
