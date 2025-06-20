@@ -7,5 +7,11 @@ RUN pip install --no-cache-dir duckdb-engine==0.10.0 duckdb==1.3.0
 USER superset
 
 # finalize
+COPY data/observatory.duckdb /app/observatory.duckdb
+
 COPY dash/entrypoint.sh /entrypoint.sh
+
+COPY dash/superset_config.py /app/pythonpath/superset_config.py
+RUN chmod +x /entrypoint.sh
+ 
 ENTRYPOINT ["/entrypoint.sh"]
