@@ -7,5 +7,5 @@ RUN pip install --no-cache-dir duckdb-engine==0.10.0 duckdb==1.3.0
 USER superset
 
 # finalize
-COPY entrypoint.sh /entrypoint.sh
+COPY dash/entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
