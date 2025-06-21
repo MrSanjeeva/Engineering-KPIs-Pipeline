@@ -11,6 +11,17 @@ COPY data/observatory.duckdb /app/observatory.duckdb
 
 COPY dash/superset_config.py /app/pythonpath/superset_config.py
 
-COPY dash/entrypoint.sh /entrypoint.sh
+# Superset initialization
+RUN superset fab create-admin \
+    --username ${ADMIN_USERNAME} \
+    --firstname ${ADMIN_FIRSTNAME} \
+    --lastname ${ADMIN_LASTNAME} \
+    --email ${ADMIN_EMAIL} \
+    --password ${ADMIN_PASSWORD} || true
 
-ENTRYPOINT ["/entrypoint.sh"]
+RUN superset db upgrade && \
+    superset init
+
+# Import dashboards
+COPY superset/superset_bundle.zip /app/
+RUN superset import-dashboards --path /app/superset_bundle.zip || echo "Import failed"

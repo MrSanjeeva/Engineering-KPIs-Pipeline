@@ -1,0 +1,31 @@
+name: Nightly KPI refresh
+on:
+  schedule:  # run every day
+    - cron:  '5 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+
+      - run: pip install -r requirements.txt
+
+      - name: Re-ingest & rebuild
+        run: |
+          python ingest/github_pull.py --days 90
+          python ingest/jira_pull.py    --days 30
+          python models/build_kpis.py
+
+      - name: Commit updated DB
+        run: |
+          git config user.name  "kpi-bot"
+          git config user.email "bot@example.com"
+          git add data/observatory.duckdb
+          git commit -m "chore: nightly KPI refresh" || echo "no diff"
+          git push
