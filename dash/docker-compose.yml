@@ -1,6 +1,8 @@
 services:
   superset:
-    build: .
+    build:
+      context: ../
+      dockerfile: dash/Dockerfile
     container_name: superset
     platform: linux/arm64/v8 # Keep this if using Apple Silicon
     restart: unless-stopped
