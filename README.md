@@ -58,11 +58,17 @@ python models/build_kpis.py
 duckdb data/observatory.duckdb      # open interactive SQL shell
 ```
 
+## 📊 Dashboard Screenshots
+
+### Engineering KPIs – Overview
+
+![Dashboard overview](assets/dashboard_overview.png)
+
 ## Live Demo
 
-_Coming soon — Superset dashboard will be hosted at_
+Superset dashboard hosted at
 
-`https://eng-kpis.onrender.com`
+`https://engineering-kpis-superset.onrender.com`
 
 ## Architecture
 
@@ -83,8 +89,9 @@ graph LR
 - [x] Jira ingest with unit test
 - [x] KPI models in DuckDB (`kpi_daily`, `deploy_freq`, `flaky_index`)
 - [x] Superset Docker compose & local dashboard
-- [ ] Render deploy + README badge
-- [ ] Automated daily data refresh
+- [x] Render deploy + README badge
+- [x] Automated daily data refresh
+- [ ] Viewer profile
 
 ## License
 

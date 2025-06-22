@@ -7,6 +7,9 @@ on:
 jobs:
   refresh:
     runs-on: ubuntu-latest
+    env:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
     steps:
       - uses: actions/checkout@v4
 
@@ -18,7 +21,7 @@ jobs:
 
       - name: Re-ingest & rebuild
         run: |
-          python ingest/github_pull.py --days 90
+          python ingest/github_pull.py --days 90 --token $GH_PAT
           python ingest/jira_pull.py    --days 30
           python models/build_kpis.py
 
