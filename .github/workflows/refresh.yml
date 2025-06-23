@@ -1,7 +1,7 @@
 name: Nightly KPI refresh
 on:
-  schedule:  # run every day
-    - cron:  '5 6 * * *'
+  schedule: # run every day
+    - cron: "5 6 * * *"
   workflow_dispatch:
 
 jobs:
@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GH_PAT: ${{ secrets.GH_PAT }}
+      JIRA_BASE: ${{ secrets.JIRA_BASE }}
+      JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
       JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
     steps:
       - uses: actions/checkout@v4
