@@ -25,7 +25,13 @@ jobs:
         run: |
           python ingest/github_pull.py --days 90 --token $GH_PAT
           python ingest/jira_pull.py    --days 30
-          python models/build_kpis.py
+
+          # Check if GitHub events file has data before proceeding
+          if [[ $(du -k "data/raw/github_events.parquet" | cut -f1) -gt 1 ]]; then
+            python models/build_kpis.py
+          else
+            echo "Skipping KPI build: github_events.parquet is empty"
+          fi
 
       - name: Commit updated DB
         run: |
