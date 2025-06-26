@@ -26,11 +26,14 @@ jobs:
           python ingest/github_pull.py --days 90 --token $GH_PAT
           python ingest/jira_pull.py    --days 30
 
-          # Check if GitHub events file has data before proceeding
-          if [[ $(du -k "data/raw/github_events.parquet" | cut -f1) -gt 1 ]]; then
+          # Check actual row count using DuckDB
+          echo "select count(*) from 'data/raw/github_events.parquet';" > check_rows.sql
+          ROW_COUNT=$(duckdb < check_rows.sql | tail -n 1)
+
+          if [[ "$ROW_COUNT" -gt 0 ]]; then
             python models/build_kpis.py
           else
-            echo "Skipping KPI build: github_events.parquet is empty"
+            echo "Skipping KPI build: github_events.parquet has 0 rows"
           fi
 
       - name: Commit updated DB
