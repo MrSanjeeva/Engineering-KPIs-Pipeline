@@ -2,8 +2,6 @@
 
 [![CI](https://github.com/MrSanjeeva/Engineering-KPIs-Pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/MrSanjeeva/Engineering-KPIs-Pipeline/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](LICENSE)
-
-Add this when the dashboard is live:
 [![Superset](https://img.shields.io/badge/Live%20Dashboard-eng--kpis.onrender.com-orange)](https://engineering-kpis-superset.onrender.com)
 
 **Purpose —** Daily-refreshed pipeline that ingests GitHub & Jira activity, stores it in a DuckDB lake, derives DORA+quality KPIs (MTTR, deployment frequency, change-failure rate, flaky-test index), and surfaces them in an Apache Superset dashboard.
